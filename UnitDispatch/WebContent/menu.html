@@ -1,0 +1,203 @@
+<html>
+<head>
+<style type="text/css">
+
+#dropmenudiv{
+position:absolute; margin: 0; padding: 8px 20px 0; background: #7d7d7d url(images/overlay.png) repeat-x 0 -110px; line-height: 100%; border-radius: 10em; font: normal .8em/1.5em Arial, Helvetica, sans-serif; -webkit-border-radius: 10px; -moz-border-radius: 5px; border-radius: 5px; -webkit-box-shadow: 0 1px 3px rgba(0,0,0, .4); -moz-box-shadow: 0 1px 3px rgba(0,0,0, .4);
+}
+#dropmenudiv a{
+ color:black; display: block; padding:  3px 10px; margin: 0; border-radius: 5px;  -moz-border-radius: 5px;	 text-shadow: 0 1px 1px rgba(0,0,0, .6);
+}
+#dropmenudiv a:hover{ /*hover background color*/
+background: #666 url(images/overlay.png) repeat-x 0 -40px; border: none; color: white; -webkit-box-shadow: none; -moz-box-shadow: none;
+}
+#dropmenudiv a:after {content: '.'; display: block; clear: both; visibility: hidden; line-height: 0; height: 0;}
+* html .dropmenudiv  ul {height: 1%;}
+</style>
+<script type="text/javascript">
+
+/***********************************************
+* AnyLink Drop Down Menu- © Dynamic Drive (www.dynamicdrive.com)
+* This notice MUST stay intact for legal use
+* Visit http://www.dynamicdrive.com/ for full source code
+***********************************************/
+
+//Contents for menu 1
+var menu1=new Array();
+var menu2=new Array();
+var menu3=new Array();
+var menu4=new Array();
+var menu5=new Array();
+var menu6=new Array();
+
+menu1[0]='<a href="checkorders.jsp">Check Order/s</a>'
+menu1[1]='<a href="unitstatus.jsp">Check Status</a>'
+menu1[2]='<a href="sntunitsbymanuf.jsp">Unit/s sent by Manuf.</a>'
+menu1[3]='<a href="unitholding.jsp">Unit Holding</a>'
+menu1[4]='<a href="Manual_Dispatched.jsp">Manual Dispatch</a>'
+menu1[5]='<a href="master.jsp">Add Code Version</a>'
+menu1[6]='<a href="DispatchID.jsp">Create New ID</a>'
+menu1[7]='<a href="unitallocationtoVendor.jsp">Unit Allocation</a>'
+
+
+
+menu2[0]='<a href="testedunits.jsp">Manufactured</a>'
+menu2[1]='<a href="unitdata.jsp">Tested</a>'
+menu2[2]='<a href="untestedunits.jsp">UnTested</a>'	
+menu2[3]='<a href="main.jsp">Enter Manuf Details</a>'
+menu2[4]='<a href="PMFDetails.jsp">Enter PMF Details</a>'
+menu2[5]='<a href="UnitHoldByStatus.jsp">Unit Hold By Status</a>'
+
+		
+//menu3[0]='<a href="showsentunits.jsp">Show Sent Units</a>'
+
+menu3[0]='<a href="showsentunits.jsp">Show Sent Units</a>'
+menu3[1]='<a href="sntunitsbymanuf.jsp">Received Inbox</a>'
+
+menu4[0]='<a href="unitliferep.jsp">Unit Life Reports</a>'
+menu4[1]='<a href="EditsummaryRep.jsp">Edit Summ Report</a>'
+menu4[2]='<a href="UnitSummReport.jsp">Unit Summary Report</a>'
+menu4[3]='<a href="UnitStockSummary.jsp">Unit Stock report</a>'
+menu4[4]='<a href="unitQTHistory.jsp">Unit Quick Test History</a>'
+			
+menu5[0]='<a href="printreceipts.jsp">External Dispatch</a>'					
+menu5[1]='<a href="printreceipt_internal.jsp">Internal Dispatch</a>'
+
+menu6[0]='<a href="unitliferep.jsp">Unit Life Reports</a>'
+menu6[1]='<a href="EditsummaryRep.jsp">Edit Summ Report</a>'
+menu6[2]='<a href="TATSummary.jsp">TAT Report</a>'		//change TATReport link to TATSummary
+menu6[3]='<a href="UnitSummReport.jsp">Unit Summary Report</a>'
+menu6[4]='<a href="UnitStockSummary.jsp">Unit Stock report</a>'
+menu6[5]='<a href="UnitHistory.jsp">Unit History Report</a>'
+					
+
+var menuwidth='165px' //default menu width
+var menubgcolor='white'  //menu bgcolor
+var disappeardelay=250  //menu disappear speed onMouseout (in miliseconds)
+var hidemenu_onclick="yes" //hide menu when user clicks within menu?
+
+/////No further editting needed
+
+var ie4=document.all
+var ns6=document.getElementById&&!document.all
+
+if (ie4||ns6)
+document.write('<div id="dropmenudiv" style="visibility:hidden;width:'+menuwidth+';background-color:'+menubgcolor+'" onMouseover="clearhidemenu()" onMouseout="dynamichide(event)"></div>')
+
+function getposOffset(what, offsettype){
+var totaloffset=(offsettype=="left")? what.offsetLeft : what.offsetTop;
+var parentEl=what.offsetParent;
+while (parentEl!=null){
+totaloffset=(offsettype=="left")? totaloffset+parentEl.offsetLeft : totaloffset+parentEl.offsetTop;
+parentEl=parentEl.offsetParent;
+}
+return totaloffset;
+}
+
+
+function showhide(obj, e, visible, hidden, menuwidth){
+if (ie4||ns6)
+dropmenuobj.style.left=dropmenuobj.style.top="-500px"
+if (menuwidth!=""){
+dropmenuobj.widthobj=dropmenuobj.style
+dropmenuobj.widthobj.width=menuwidth
+}
+if (e.type=="click" && obj.visibility==hidden || e.type=="mouseover")
+obj.visibility=visible
+else if (e.type=="click")
+obj.visibility=hidden
+}
+
+function iecompattest(){
+return (document.compatMode && document.compatMode!="BackCompat")? document.documentElement : document.body
+}
+
+function clearbrowseredge(obj, whichedge){
+var edgeoffset=0
+if (whichedge=="rightedge"){
+var windowedge=ie4 && !window.opera? iecompattest().scrollLeft+iecompattest().clientWidth-15 : window.pageXOffset+window.innerWidth-15
+dropmenuobj.contentmeasure=dropmenuobj.offsetWidth
+if (windowedge-dropmenuobj.x < dropmenuobj.contentmeasure)
+edgeoffset=dropmenuobj.contentmeasure-obj.offsetWidth
+}
+else{
+var topedge=ie4 && !window.opera? iecompattest().scrollTop : window.pageYOffset
+var windowedge=ie4 && !window.opera? iecompattest().scrollTop+iecompattest().clientHeight-15 : window.pageYOffset+window.innerHeight-18
+dropmenuobj.contentmeasure=dropmenuobj.offsetHeight
+if (windowedge-dropmenuobj.y < dropmenuobj.contentmeasure){ //move up?
+edgeoffset=dropmenuobj.contentmeasure+obj.offsetHeight
+if ((dropmenuobj.y-topedge)<dropmenuobj.contentmeasure) //up no good either?
+edgeoffset=dropmenuobj.y+obj.offsetHeight-topedge
+}
+}
+return edgeoffset
+}
+
+function populatemenu(what){
+if (ie4||ns6)
+dropmenuobj.innerHTML=what.join("")
+}
+
+
+function dropdownmenu(obj, e, menucontents, menuwidth){
+if (window.event) event.cancelBubble=true
+else if (e.stopPropagation) e.stopPropagation()
+clearhidemenu()
+dropmenuobj=document.getElementById? document.getElementById("dropmenudiv") : dropmenudiv
+populatemenu(menucontents)
+
+if (ie4||ns6){
+showhide(dropmenuobj.style, e, "visible", "hidden", menuwidth)
+dropmenuobj.x=getposOffset(obj, "left")
+dropmenuobj.y=getposOffset(obj, "top")
+dropmenuobj.style.left=dropmenuobj.x-clearbrowseredge(obj, "rightedge")+"px"
+dropmenuobj.style.top=dropmenuobj.y-clearbrowseredge(obj, "bottomedge")+obj.offsetHeight+"px"
+}
+
+return clickreturnvalue()
+}
+function clickreturnvalue(){
+if (ie4||ns6) return false
+else return true
+}
+
+function contains_ns6(a, b) {
+while (b.parentNode)
+if ((b = b.parentNode) == a)
+return true;
+return false;
+}
+
+function dynamichide(e){
+if (ie4&&!dropmenuobj.contains(e.toElement))
+delayhidemenu()
+else if (ns6&&e.currentTarget!= e.relatedTarget&& !contains_ns6(e.currentTarget, e.relatedTarget))
+delayhidemenu()
+}
+
+function hidemenu(e){
+if (typeof dropmenuobj!="undefined"){
+if (ie4||ns6)
+dropmenuobj.style.visibility="hidden"
+}
+}
+
+function delayhidemenu(){
+if (ie4||ns6)
+delayhide=setTimeout("hidemenu()",disappeardelay)
+}
+
+function clearhidemenu(){
+if (typeof delayhide!="undefined")
+clearTimeout(delayhide)
+}
+
+if (hidemenu_onclick=="yes")
+document.onclick=hidemenu
+
+</script>
+</head>
+<body>
+<div align="left">
+</body>
+</html>

@@ -1,0 +1,80 @@
+<html>
+<head>
+<title>Send SMS</title>
+<script language="javascript">
+function sendsms()
+{
+	
+			
+		var v1=document.getElementById("outLogin").value;
+		var v2=document.getElementById("outPWD").value;
+		var v3=document.getElementById("outMSG").value;
+		var v4=document.getElementById("outNumber").value;
+		var v5=document.getElementById("sign").value;
+	
+		var ajaxRequest;  // The variable that makes Ajax possible!
+
+		try{
+			// Opera 8.0+, Firefox, Safari
+			ajaxRequest = new XMLHttpRequest();
+	           }  
+                 catch (e)
+                 {
+		        // Internet Explorer Browsers
+		        try
+                        {
+			   ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+		        } 
+                        catch (e)
+                        {
+			   try
+                           {
+			       ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+			   } 
+                           catch (e)
+                           {
+			      // Something went wrong
+			      alert("Your browser broke!");
+			      return false;
+			   }
+		        }
+                }
+
+             // Create a function that will receive data sent from the server
+           	  ajaxRequest.onreadystatechange = function()
+                   {
+    	 	  if(ajaxRequest.readyState == 4)
+                      {
+                         var reslt=ajaxRequest.responseText;
+                         alert(reslt);
+                         
+                                               
+                         
+		     } 
+         	  }
+         	  	var queryString = "?outLogin="+v1+"&outPWD="+v2+"&outMSG="+v3+"&outNumber="+v4+"&sign="+v5;
+         	  	//alert("http://india.timessms.com/receiverCommon.asp"+queryString);
+	     			//ajaxRequest.open("GET", "www.india.timessms.com/receiverCommon.asp"+queryString, true);
+				ajaxRequest.open("GET", "sendingsms.jsp"+queryString, true);
+	     			ajaxRequest.send(null); 
+		
+	 
+}
+</script>
+</head>
+<body bgcolor="white">
+<!-- <form action="http://india.timessms.com/receiverCommon.asp" method="get"> -->
+<table border="1" width="50%" align="center">
+<tr>
+<td colspan="2"><font color="blue" size="3">Please Enter the details to send the SMS</font></td>
+</tr>
+<tr><td>Login Id</td><td><input type="text" name="outLogin" id="outLogin"></td></tr>
+<tr><td>Password</td><td><input type="password" name="outPWD" id="outPWD" ></td></tr>
+<tr><td>SMS</td><td><input type="text" name="outMSG" id="outMSG" ></td></tr>
+<tr><td>Numbers</td><td><input type="text" name="outNumber" id="outNumber" ></td></tr>
+<tr><td>Sign</td><td><input type="text" name="sign" id="sign" ></td></tr>
+<tr><td colspan="2" align="center"><input type="button" name="submit" value="submit" onclick="sendsms();"></td></tr>
+</table>
+<!-- </form> -->
+</body>
+</html>
